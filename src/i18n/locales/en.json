@@ -28,5 +28,8 @@
   "language": "Language",
   "adminOnly": "Admin account required",
   "back": "Back",
-  "manageQuiz": "Manage quiz"
+  "manageQuiz": "Manage quiz",
+  "signingIn": "Signing in…",
+  "saving": "Saving…",
+  "deleting": "Deleting…"
 }

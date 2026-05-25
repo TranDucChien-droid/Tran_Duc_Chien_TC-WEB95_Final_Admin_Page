@@ -10,6 +10,7 @@ import { Input } from "@/components/Input";
 import { Modal } from "@/components/Modal";
 import { Select } from "@/components/Select";
 import { Textarea } from "@/components/Textarea";
+import { FormFieldsSkeleton } from "@/components/skeletons/FormFieldsSkeleton";
 import { downloadQuestionImportTemplate } from "@/utils/downloadQuestionTemplate";
 
 type QuizEditModalProps = {
@@ -20,7 +21,7 @@ type QuizEditModalProps = {
 
 export function QuizEditModal({ quizId, open, onClose }: QuizEditModalProps) {
   const { t } = useTranslation();
-  const { data } = useQuizDetail(quizId);
+  const { data, isLoading } = useQuizDetail(quizId);
 
   const [qTitle, setQTitle] = useState("");
   const [qDesc, setQDesc] = useState("");
@@ -102,13 +103,22 @@ export function QuizEditModal({ quizId, open, onClose }: QuizEditModalProps) {
             <Button variant="ghost" type="button" onClick={handleCancel} disabled={isSaving}>
               {t("cancel")}
             </Button>
-            <Button type="button" disabled={!canSave || isSaving} onClick={() => void handleSave()}>
-              {t("save")}
+            <Button
+              type="button"
+              loading={isSaving}
+              disabled={!canSave}
+              onClick={() => void handleSave()}
+            >
+              {isSaving ? t("saving") : t("save")}
             </Button>
           </div>
         </div>
       }
     >
+      {isLoading && !data ? (
+        <FormFieldsSkeleton />
+      ) : (
+        <>
       <section className="space-y-4 border-b border-slate-200 pb-6 dark:border-slate-800">
         <h3 className="text-base font-semibold">{t("edit")}</h3>
         <div className="grid gap-3">
@@ -135,6 +145,7 @@ export function QuizEditModal({ quizId, open, onClose }: QuizEditModalProps) {
           <ButtonImportFile
             key={pendingFile?.name ?? "no-file"}
             disabled={isSaving}
+            loading={importExcel.isPending}
             onFileSelect={setPendingFile}
           />
         </div>
@@ -164,6 +175,8 @@ export function QuizEditModal({ quizId, open, onClose }: QuizEditModalProps) {
           </div>
         </div>
       </section>
+        </>
+      )}
     </Modal>
   );
 }

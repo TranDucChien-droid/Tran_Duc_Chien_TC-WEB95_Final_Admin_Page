@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
+import { QuizListSkeleton } from "@/components/skeletons/QuizListSkeleton";
 import { useCreateQuiz } from "@/hooks/useCreateQuiz";
 import { useQuizzes } from "@/hooks/useQuizzes";
 
@@ -23,21 +24,24 @@ export function QuizListPage() {
         <h1 className="text-2xl font-semibold">{t("quizzes")}</h1>
         <Button onClick={() => setOpen(true)}>{t("newQuiz")}</Button>
       </div>
-      {isLoading && <p className="text-slate-600 dark:text-slate-400">…</p>}
-      <ul className="space-y-3">
-        {data?.map((q) => (
-          <li key={q._id}>
-            <Link
-              to="/quizzes/$quizId"
-              params={{ quizId: q._id }}
-              className="block rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500"
-            >
-              <div className="font-medium">{q.title}</div>
-              {q.description && <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{q.description}</p>}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        <QuizListSkeleton />
+      ) : (
+        <ul className="space-y-3">
+          {data?.map((q) => (
+            <li key={q._id}>
+              <Link
+                to="/quizzes/$quizId"
+                params={{ quizId: q._id }}
+                className="block rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500"
+              >
+                <div className="font-medium">{q.title}</div>
+                {q.description && <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{q.description}</p>}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
@@ -54,11 +58,12 @@ export function QuizListPage() {
               </div>
             </div>
             <div className="mt-6 flex justify-end gap-2">
-              <Button variant="ghost" onClick={() => setOpen(false)}>
+              <Button variant="ghost" onClick={() => setOpen(false)} disabled={create.isPending}>
                 {t("cancel")}
               </Button>
               <Button
-                disabled={!title.trim() || create.isPending}
+                loading={create.isPending}
+                disabled={!title.trim()}
                 onClick={() => {
                   create.mutate(
                     { title, description },
@@ -72,7 +77,7 @@ export function QuizListPage() {
                   );
                 }}
               >
-                {t("save")}
+                {create.isPending ? t("saving") : t("save")}
               </Button>
             </div>
           </div>

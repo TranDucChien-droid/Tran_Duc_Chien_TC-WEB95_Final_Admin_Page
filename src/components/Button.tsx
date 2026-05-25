@@ -1,14 +1,17 @@
 import clsx from "clsx";
 import type { ButtonHTMLAttributes } from "react";
+import { Spinner } from "./Spinner";
 
 export type ButtonVariant = "primary" | "ghost" | "outline" | "danger" | "dark";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   fullWidth?: boolean;
+  loading?: boolean;
 };
 
-const base = "rounded-md font-medium transition disabled:cursor-not-allowed";
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition disabled:cursor-not-allowed";
 
 const variants: Record<ButtonVariant, string> = {
   primary: "bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-500 disabled:opacity-50",
@@ -27,10 +30,19 @@ export function Button({
   type = "button",
   className,
   children,
+  loading = false,
+  disabled,
   ...props
 }: ButtonProps) {
   return (
-    <button type={type} className={clsx(base, variants[variant], fullWidth && "w-full", className)} {...props}>
+    <button
+      type={type}
+      className={clsx(base, variants[variant], fullWidth && "w-full", className)}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+      {...props}
+    >
+      {loading && <Spinner size="sm" />}
       {children}
     </button>
   );

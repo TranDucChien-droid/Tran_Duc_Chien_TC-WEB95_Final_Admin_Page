@@ -28,5 +28,8 @@
   "language": "Ngôn ngữ",
   "adminOnly": "Cần tài khoản quản trị",
   "back": "Quay lại",
-  "manageQuiz": "Quản lý đề"
+  "manageQuiz": "Quản lý đề",
+  "signingIn": "Đang đăng nhập…",
+  "saving": "Đang lưu…",
+  "deleting": "Đang xóa…"
 }
