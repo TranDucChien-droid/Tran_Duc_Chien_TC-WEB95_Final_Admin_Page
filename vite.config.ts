@@ -7,5 +7,13 @@ export default defineConfig({
   resolve: {
     alias: { "@": path.join(process.cwd(), "src") },
   },
-  server: { port: 5173 },
+  server: {
+    port: 5173,
+    proxy: {
+      "/api": {
+        target: "http://localhost:5000",
+        changeOrigin: true,
+      },
+    },
+  },
 });
