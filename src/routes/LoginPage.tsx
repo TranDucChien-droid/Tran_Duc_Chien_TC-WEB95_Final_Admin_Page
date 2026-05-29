@@ -25,7 +25,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4">
+    <div className="mx-auto flex min-h-[70vh] w-full max-w-xl flex-col justify-center px-4">
       <h1 className="mb-6 text-center text-2xl font-semibold">{t("appTitle")}</h1>
       <form onSubmit={(e) => void onSubmit(e)} className="space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <div>
