@@ -3,6 +3,7 @@ export type Quiz = {
   title: string;
   description?: string;
   createdBy: string;
+  disabled?: boolean;
   createdAt: string;
 };
 

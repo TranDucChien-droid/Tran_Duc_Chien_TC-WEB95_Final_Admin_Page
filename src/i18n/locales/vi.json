@@ -43,5 +43,18 @@
   "userNotFound": "Không tìm thấy người dùng.",
   "attemptHistory": "Lịch sử làm bài",
   "noAttempts": "Chưa có lượt làm bài.",
-  "score": "Điểm"
+  "score": "Điểm",
+  "showAnswers": "Xem câu trả lời",
+  "hideAnswers": "Ẩn câu trả lời",
+  "userAnswer": "Câu trả lời",
+  "correctAnswer": "Đáp án đúng",
+  "correct": "Đúng",
+  "incorrect": "Sai",
+  "noAnswer": "Không trả lời",
+  "noAnswerDetails": "Chưa có chi tiết câu trả lời.",
+  "unknownQuestion": "Câu hỏi không xác định",
+  "disabled": "Đã tắt",
+  "disableQuiz": "Tắt đề",
+  "enableQuiz": "Bật đề",
+  "quizDisabledNotice": "Đề này đang tắt. Người dùng không thể làm bài cho đến khi bạn bật lại."
 }

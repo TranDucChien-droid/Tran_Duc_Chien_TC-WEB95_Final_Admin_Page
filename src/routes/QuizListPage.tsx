@@ -1,12 +1,61 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
 import { QuizListSkeleton } from "@/components/skeletons/QuizListSkeleton";
 import { useCreateQuiz } from "@/hooks/useCreateQuiz";
 import { useQuizzes } from "@/hooks/useQuizzes";
+import { useToggleQuizDisabled } from "@/hooks/useToggleQuizDisabled";
+import type { Quiz } from "@/types/quiz.types";
+
+function QuizListItem({ quiz }: { quiz: Quiz }) {
+  const { t } = useTranslation();
+  const toggleDisabled = useToggleQuizDisabled();
+  const isToggling = toggleDisabled.isPending && toggleDisabled.variables?.quizId === quiz._id;
+  const disabled = Boolean(quiz.disabled);
+
+  return (
+    <li
+      className={clsx(
+        "rounded-lg border bg-white p-4 shadow-sm transition dark:bg-slate-900",
+        disabled
+          ? "border-amber-200 opacity-80 dark:border-amber-900"
+          : "border-slate-200 dark:border-slate-800"
+      )}
+    >
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <Link
+          to="/quizzes/$quizId"
+          params={{ quizId: quiz._id }}
+          className="min-w-0 flex-1 hover:text-indigo-600 dark:hover:text-indigo-400"
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-medium">{quiz.title}</span>
+            {disabled && (
+              <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-950 dark:text-amber-200">
+                {t("disabled")}
+              </span>
+            )}
+          </div>
+          {quiz.description && (
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{quiz.description}</p>
+          )}
+        </Link>
+        <Button
+          variant={disabled ? "primary" : "outline"}
+          loading={isToggling}
+          disabled={toggleDisabled.isPending}
+          onClick={() => toggleDisabled.mutate({ quizId: quiz._id, disabled: !disabled })}
+        >
+          {disabled ? t("enableQuiz") : t("disableQuiz")}
+        </Button>
+      </div>
+    </li>
+  );
+}
 
 export function QuizListPage() {
   const { t } = useTranslation();
@@ -29,16 +78,7 @@ export function QuizListPage() {
       ) : (
         <ul className="space-y-3">
           {data?.map((q) => (
-            <li key={q._id}>
-              <Link
-                to="/quizzes/$quizId"
-                params={{ quizId: q._id }}
-                className="block rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500"
-              >
-                <div className="font-medium">{q.title}</div>
-                {q.description && <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{q.description}</p>}
-              </Link>
-            </li>
+            <QuizListItem key={q._id} quiz={q} />
           ))}
         </ul>
       )}

@@ -43,5 +43,18 @@
   "userNotFound": "User not found.",
   "attemptHistory": "Attempt history",
   "noAttempts": "No attempts yet.",
-  "score": "Score"
+  "score": "Score",
+  "showAnswers": "Show answers",
+  "hideAnswers": "Hide answers",
+  "userAnswer": "User answer",
+  "correctAnswer": "Correct answer",
+  "correct": "Correct",
+  "incorrect": "Incorrect",
+  "noAnswer": "No answer",
+  "noAnswerDetails": "No answer details recorded.",
+  "unknownQuestion": "Unknown question",
+  "disabled": "Disabled",
+  "disableQuiz": "Disable",
+  "enableQuiz": "Enable",
+  "quizDisabledNotice": "This quiz is disabled. Users cannot take it until you enable it again."
 }

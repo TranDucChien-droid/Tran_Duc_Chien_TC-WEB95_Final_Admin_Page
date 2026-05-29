@@ -6,12 +6,25 @@ export type UserSummary = {
   attemptCount: number;
 };
 
+export type AttemptAnswerDetail = {
+  questionId: string;
+  selectedIndexes: number[];
+  question?: string;
+  type?: "single" | "multiple";
+  options?: string[];
+  selectedLabels?: string[];
+  correctIndexes?: number[];
+  correctLabels?: string[];
+  isCorrect?: boolean;
+};
+
 export type AttemptSummary = {
   _id: string;
   userId: string;
   quizId: { _id: string; title: string } | string;
   score: number;
   createdAt: string;
+  answers?: AttemptAnswerDetail[];
 };
 
 export type UserAttemptsResponse = {

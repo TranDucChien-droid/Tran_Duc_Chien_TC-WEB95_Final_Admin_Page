@@ -16,7 +16,13 @@ export const createQuiz = async (payload: { title: string; description?: string 
   return data;
 };
 
-export const updateQuiz = async (quizId: string, payload: { title: string; description: string }) => {
+export type UpdateQuizPayload = {
+  title?: string;
+  description?: string;
+  disabled?: boolean;
+};
+
+export const updateQuiz = async (quizId: string, payload: UpdateQuizPayload) => {
   const { data } = await api.patch<Quiz>(`/quizzes/${quizId}`, payload);
   return data;
 };

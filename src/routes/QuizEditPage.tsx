@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuizDetail } from "@/hooks/useQuizDetail";
 import { useRemoveQuestion } from "@/hooks/useRemoveQuestion";
+import { useToggleQuizDisabled } from "@/hooks/useToggleQuizDisabled";
 import { Button } from "@/components/Button";
 import { QuizEditModal } from "@/components/QuizEditModal";
 import { QuizDetailSkeleton } from "@/components/skeletons/QuizDetailSkeleton";
@@ -18,6 +19,8 @@ export function QuizEditPage() {
 
   const { data, isLoading, error } = useQuizDetail(quizId);
   const removeQuestion = useRemoveQuestion(quizId);
+  const toggleDisabled = useToggleQuizDisabled();
+  const disabled = Boolean(data?.disabled);
 
   if (!quizId) return <p className="text-red-600">Invalid quiz</p>;
   if (isLoading) return <QuizDetailSkeleton variant="admin" />;
@@ -29,10 +32,25 @@ export function QuizEditPage() {
         <Link to="/" className="text-sm text-indigo-600 hover:underline dark:text-indigo-400">
           ← {t("back")}
         </Link>
-        <Button variant="outline" onClick={() => setModalOpen(true)}>
-          {t("manageQuiz")}
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant={disabled ? "primary" : "outline"}
+            loading={toggleDisabled.isPending}
+            onClick={() => toggleDisabled.mutate({ quizId, disabled: !disabled })}
+          >
+            {disabled ? t("enableQuiz") : t("disableQuiz")}
+          </Button>
+          <Button variant="outline" onClick={() => setModalOpen(true)}>
+            {t("manageQuiz")}
+          </Button>
+        </div>
       </div>
+
+      {disabled && (
+        <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950/50 dark:text-amber-100">
+          {t("quizDisabledNotice")}
+        </p>
+      )}
 
       <QuizEditModal quizId={quizId} open={modalOpen} onClose={() => setModalOpen(false)} />
 
@@ -54,7 +72,7 @@ export function QuizEditPage() {
                       ))}
                     </ol>
                     <p className="mt-2 text-sm text-emerald-700 dark:text-emerald-400">
-                      Correct: {(q.correctAnswers ?? []).join(", ")}
+                      Correct: {(q.correctAnswers ?? []).map((i) => i + 1).join(", ")}
                     </p>
                   </div>
                   <Button
