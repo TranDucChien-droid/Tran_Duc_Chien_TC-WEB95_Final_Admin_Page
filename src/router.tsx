@@ -1,4 +1,5 @@
 import { AdminLayout } from "@/components/AdminLayout";
+import { PublicLayout } from "@/components/PublicLayout";
 import { getToken } from "@/services/api";
 import { LoginPage } from "@/routes/LoginPage";
 import { QuizEditPage } from "@/routes/QuizEditPage";
@@ -11,8 +12,14 @@ const rootRoute = createRootRoute({
   component: () => <Outlet />,
 });
 
-const loginRoute = createRoute({
+const publicLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
+  id: "publicLayout",
+  component: PublicLayout,
+});
+
+const loginRoute = createRoute({
+  getParentRoute: () => publicLayoutRoute,
   path: "login",
   component: LoginPage,
 });
@@ -51,7 +58,7 @@ const userAttemptsRoute = createRoute({
 });
 
 const routeTree = rootRoute.addChildren([
-  loginRoute,
+  publicLayoutRoute.addChildren([loginRoute]),
   authLayoutRoute.addChildren([indexRoute, quizEditorRoute, usersRoute, userAttemptsRoute]),
 ]);
 

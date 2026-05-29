@@ -4,6 +4,7 @@
   "email": "Email",
   "password": "Mật khẩu",
   "logout": "Đăng xuất",
+  "signedInAs": "Đăng nhập với",
   "quizzes": "Bộ đề",
   "newQuiz": "Tạo đề mới",
   "title": "Tiêu đề",

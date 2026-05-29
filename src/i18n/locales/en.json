@@ -4,6 +4,7 @@
   "email": "Email",
   "password": "Password",
   "logout": "Log out",
+  "signedInAs": "Signed in as",
   "quizzes": "Quizzes",
   "newQuiz": "New quiz",
   "title": "Title",
