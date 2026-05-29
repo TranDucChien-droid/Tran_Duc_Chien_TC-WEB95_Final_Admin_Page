@@ -31,5 +31,17 @@
   "manageQuiz": "Manage quiz",
   "signingIn": "Signing in…",
   "saving": "Saving…",
-  "deleting": "Deleting…"
+  "deleting": "Deleting…",
+  "users": "Users",
+  "noUsers": "No users yet.",
+  "role": "Role",
+  "roleAdmin": "Admin",
+  "roleUser": "User",
+  "joined": "Joined",
+  "attemptCount": "{{count}} attempt(s)",
+  "backToUsers": "Back to users",
+  "userNotFound": "User not found.",
+  "attemptHistory": "Attempt history",
+  "noAttempts": "No attempts yet.",
+  "score": "Score"
 }

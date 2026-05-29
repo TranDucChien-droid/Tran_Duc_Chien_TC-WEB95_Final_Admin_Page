@@ -31,5 +31,17 @@
   "manageQuiz": "Quản lý đề",
   "signingIn": "Đang đăng nhập…",
   "saving": "Đang lưu…",
-  "deleting": "Đang xóa…"
+  "deleting": "Đang xóa…",
+  "users": "Người dùng",
+  "noUsers": "Chưa có người dùng.",
+  "role": "Vai trò",
+  "roleAdmin": "Quản trị",
+  "roleUser": "Người dùng",
+  "joined": "Tham gia",
+  "attemptCount": "{{count}} lượt làm bài",
+  "backToUsers": "Quay lại danh sách",
+  "userNotFound": "Không tìm thấy người dùng.",
+  "attemptHistory": "Lịch sử làm bài",
+  "noAttempts": "Chưa có lượt làm bài.",
+  "score": "Điểm"
 }
