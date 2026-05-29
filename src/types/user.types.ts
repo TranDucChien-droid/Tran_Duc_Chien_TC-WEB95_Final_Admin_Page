@@ -25,6 +25,7 @@ export type AttemptSummary = {
   score: number;
   createdAt: string;
   answers?: AttemptAnswerDetail[];
+  reviewable?: boolean;
 };
 
 export type UserAttemptsResponse = {

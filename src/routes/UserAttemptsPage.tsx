@@ -1,10 +1,13 @@
 import { Link, useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Button } from "@/components/Button";
+import { Drawer } from "@/components/Drawer";
 import { QuizListSkeleton } from "@/components/skeletons/QuizListSkeleton";
 import { useUserAttempts } from "@/hooks/useUserAttempts";
 import { CARD_GRID_CLASS } from "@/constants/grid";
 import type { AttemptAnswerDetail, AttemptSummary } from "@/types/user.types";
+import { isAttemptReviewable } from "@/utils/isAttemptReviewable";
 
 function formatDate(value: string) {
   return new Date(value).toLocaleString();
@@ -23,11 +26,11 @@ function AttemptAnswers({ answers }: { answers: AttemptAnswerDetail[] }) {
   const { t } = useTranslation();
 
   if (!answers.length) {
-    return <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">{t("noAnswerDetails")}</p>;
+    return <p className="text-sm text-slate-500 dark:text-slate-400">{t("noAnswerDetails")}</p>;
   }
 
   return (
-    <ol className="mt-4 space-y-3 border-t border-slate-100 pt-4 dark:border-slate-800">
+    <ol className="space-y-3">
       {answers.map((answer, index) => (
         <li
           key={String(answer.questionId)}
@@ -67,9 +70,13 @@ function AttemptAnswers({ answers }: { answers: AttemptAnswerDetail[] }) {
   );
 }
 
-function AttemptCard({ attempt }: { attempt: AttemptSummary }) {
+type AttemptCardProps = {
+  attempt: AttemptSummary;
+  onView: () => void;
+};
+
+function AttemptCard({ attempt, onView }: AttemptCardProps) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
   const answers = attempt.answers ?? [];
 
   return (
@@ -81,14 +88,9 @@ function AttemptCard({ attempt }: { attempt: AttemptSummary }) {
         </span>
       </div>
       <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{formatDate(attempt.createdAt)}</p>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="mt-3 text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
-      >
-        {open ? t("hideAnswers") : t("showAnswers")} ({answers.length})
-      </button>
-      {open && <AttemptAnswers answers={answers} />}
+      <Button className="mt-4 w-full" variant="outline" onClick={onView}>
+        {t("viewAttemptDetails")} ({answers.length})
+      </Button>
     </li>
   );
 }
@@ -101,6 +103,12 @@ export function UserAttemptsPage() {
 
   const { t } = useTranslation();
   const { data, isLoading } = useUserAttempts(userId);
+  const [selectedAttempt, setSelectedAttempt] = useState<AttemptSummary | null>(null);
+
+  const reviewableAttempts = useMemo(
+    () => (data?.attempts ?? []).filter(isAttemptReviewable),
+    [data?.attempts]
+  );
 
   return (
     <div className="w-full">
@@ -122,16 +130,45 @@ export function UserAttemptsPage() {
             </p>
           </div>
 
-          <h2 className="mb-4 text-lg font-semibold">{t("attemptHistory")}</h2>
-          {!data.attempts.length ? (
-            <p className="text-slate-600 dark:text-slate-400">{t("noAttempts")}</p>
+          <h2 className="mb-4 text-lg font-semibold">
+            {t("attemptHistory")} ({reviewableAttempts.length})
+          </h2>
+          {!reviewableAttempts.length ? (
+            <p className="text-slate-600 dark:text-slate-400">
+              {data.attempts.length ? t("noReviewableAttempts") : t("noAttempts")}
+            </p>
           ) : (
             <ul className={CARD_GRID_CLASS}>
-              {data.attempts.map((attempt) => (
-                <AttemptCard key={attempt._id} attempt={attempt} />
+              {reviewableAttempts.map((attempt) => (
+                <AttemptCard key={attempt._id} attempt={attempt} onView={() => setSelectedAttempt(attempt)} />
               ))}
             </ul>
           )}
+
+          <Drawer
+            open={selectedAttempt != null}
+            onClose={() => setSelectedAttempt(null)}
+            title={selectedAttempt ? quizTitle(selectedAttempt.quizId) : ""}
+          >
+            {selectedAttempt && (
+              <div className="space-y-4">
+                <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-4 dark:border-indigo-900 dark:bg-indigo-950/40">
+                  <p className="text-lg font-semibold">
+                    {t("score")}: {selectedAttempt.score}%
+                  </p>
+                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                    {formatDate(selectedAttempt.createdAt)}
+                  </p>
+                </div>
+                <section>
+                  <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">
+                    {t("answerReview")}
+                  </h3>
+                  <AttemptAnswers answers={selectedAttempt.answers ?? []} />
+                </section>
+              </div>
+            )}
+          </Drawer>
         </>
       )}
     </div>
