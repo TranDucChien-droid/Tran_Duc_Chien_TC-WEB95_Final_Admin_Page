@@ -13,7 +13,7 @@ export function AppSidebar() {
 
   return (
     <aside className="flex w-56 shrink-0 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-      <div className="border-b border-slate-200 px-4 py-4 dark:border-slate-800">
+      <div className="border-slate-200 px-4 py-4 dark:border-slate-800">
         <Link to="/" className="text-lg font-semibold text-indigo-600 dark:text-indigo-400">
           {t("appTitle")}
         </Link>
