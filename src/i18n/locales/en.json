@@ -56,5 +56,12 @@
   "disabled": "Disabled",
   "disableQuiz": "Disable",
   "enableQuiz": "Enable",
-  "quizDisabledNotice": "This quiz is disabled. Users cannot take it until you enable it again."
+  "quizDisabledNotice": "This quiz is disabled. Users cannot take it until you enable it again.",
+  "selectAllQuestions": "Select all questions",
+  "selectQuestion": "Select question",
+  "deleteSelectedCount": "Delete selected ({{count}})",
+  "deleteSelected": "Delete selected",
+  "deleteQuestionsTitle": "Delete questions?",
+  "deleteQuestionsWarning": "You are about to delete {{count}} question(s). This cannot be undone.",
+  "deleteQuestionsIrreversible": "All selected questions will be permanently removed from this quiz."
 }

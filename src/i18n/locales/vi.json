@@ -56,5 +56,12 @@
   "disabled": "Đã tắt",
   "disableQuiz": "Tắt đề",
   "enableQuiz": "Bật đề",
-  "quizDisabledNotice": "Đề này đang tắt. Người dùng không thể làm bài cho đến khi bạn bật lại."
+  "quizDisabledNotice": "Đề này đang tắt. Người dùng không thể làm bài cho đến khi bạn bật lại.",
+  "selectAllQuestions": "Chọn tất cả câu hỏi",
+  "selectQuestion": "Chọn câu hỏi",
+  "deleteSelectedCount": "Xóa đã chọn ({{count}})",
+  "deleteSelected": "Xóa đã chọn",
+  "deleteQuestionsTitle": "Xóa câu hỏi?",
+  "deleteQuestionsWarning": "Bạn sắp xóa {{count}} câu hỏi. Thao tác này không thể hoàn tác.",
+  "deleteQuestionsIrreversible": "Tất cả câu hỏi đã chọn sẽ bị xóa vĩnh viễn khỏi đề này."
 }

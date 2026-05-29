@@ -16,6 +16,13 @@ export const deleteQuestion = async (questionId: string) => {
   await api.delete(`/questions/${questionId}`);
 };
 
+export const deleteQuestionsBulk = async (quizId: string, questionIds: string[]) => {
+  const { data } = await api.post<{ deleted: number }>(`/quizzes/${quizId}/questions/bulk-delete`, {
+    questionIds,
+  });
+  return data;
+};
+
 export const importQuestions = async (quizId: string, file: File) => {
   const fd = new FormData();
   fd.append("file", file);

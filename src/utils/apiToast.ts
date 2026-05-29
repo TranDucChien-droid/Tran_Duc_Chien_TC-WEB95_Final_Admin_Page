@@ -32,6 +32,9 @@ function getSuccessMessage(method: string, path: string): string {
   if (method === "patch" && /^quizzes\/[^/]+$/.test(path)) return "Quiz updated successfully";
   if (method === "post" && /^quizzes\/[^/]+\/questions$/.test(path)) return "Question added successfully";
   if (method === "delete" && /^questions\/[^/]+$/.test(path)) return "Question deleted successfully";
+  if (method === "post" && /^quizzes\/[^/]+\/questions\/bulk-delete$/.test(path)) {
+    return "Selected questions deleted successfully";
+  }
   if (method === "post" && /^quizzes\/[^/]+\/questions\/import$/.test(path)) {
     return "Questions imported successfully";
   }
@@ -61,6 +64,16 @@ export function notifyApiSuccess(response: AxiosResponse) {
       toast.success(`${imported} question(s) imported successfully`);
     } else {
       toast.success("Questions imported successfully");
+    }
+    return;
+  }
+
+  if (method === "post" && /^quizzes\/[^/]+\/questions\/bulk-delete$/.test(path)) {
+    const deleted = response.data?.deleted;
+    if (typeof deleted === "number") {
+      toast.success(`${deleted} question(s) deleted successfully`);
+    } else {
+      toast.success("Selected questions deleted successfully");
     }
     return;
   }
