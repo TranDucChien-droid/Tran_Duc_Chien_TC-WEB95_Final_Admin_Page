@@ -72,7 +72,7 @@ function AttemptCard({ attempt }: { attempt: AttemptSummary }) {
   const answers = attempt.answers ?? [];
 
   return (
-    <li className="rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+    <li className="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="font-medium">{quizTitle(attempt.quizId)}</span>
         <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">
@@ -125,7 +125,7 @@ export function UserAttemptsPage() {
           {!data.attempts.length ? (
             <p className="text-slate-600 dark:text-slate-400">{t("noAttempts")}</p>
           ) : (
-            <ul className="space-y-3">
+            <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {data.attempts.map((attempt) => (
                 <AttemptCard key={attempt._id} attempt={attempt} />
               ))}

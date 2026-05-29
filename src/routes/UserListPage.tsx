@@ -19,22 +19,24 @@ export function UserListPage() {
       ) : !data?.length ? (
         <p className="text-slate-600 dark:text-slate-400">{t("noUsers")}</p>
       ) : (
-        <ul className="space-y-3">
+        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {data.map((user) => (
             <li key={user._id}>
               <Link
                 to="/users/$userId"
                 params={{ userId: user._id }}
-                className="flex items-center justify-between gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500"
+                className="flex h-full min-h-[8rem] flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-indigo-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500"
               >
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="font-medium">{user.email}</div>
-                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                    {t("role")}: {user.role === "admin" ? t("roleAdmin") : t("roleUser")} · {t("joined")}{" "}
-                    {formatDate(user.createdAt)}
+                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                    {t("role")}: {user.role === "admin" ? t("roleAdmin") : t("roleUser")}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {t("joined")} {formatDate(user.createdAt)}
                   </p>
                 </div>
-                <span className="shrink-0 text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                <span className="mt-4 text-sm font-semibold text-indigo-600 dark:text-indigo-400">
                   {t("attemptCount", { count: user.attemptCount })}
                 </span>
               </Link>

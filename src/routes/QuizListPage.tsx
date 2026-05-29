@@ -20,39 +20,38 @@ function QuizListItem({ quiz }: { quiz: Quiz }) {
   return (
     <li
       className={clsx(
-        "rounded-lg border bg-white p-4 shadow-sm transition dark:bg-slate-900",
+        "flex h-full flex-col rounded-xl border bg-white p-4 shadow-sm transition dark:bg-slate-900",
         disabled
           ? "border-amber-200 opacity-80 dark:border-amber-900"
           : "border-slate-200 dark:border-slate-800"
       )}
     >
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <Link
-          to="/quizzes/$quizId"
-          params={{ quizId: quiz._id }}
-          className="min-w-0 flex-1 hover:text-indigo-600 dark:hover:text-indigo-400"
-        >
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-medium">{quiz.title}</span>
-            {disabled && (
-              <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-950 dark:text-amber-200">
-                {t("disabled")}
-              </span>
-            )}
-          </div>
-          {quiz.description && (
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{quiz.description}</p>
+      <Link
+        to="/quizzes/$quizId"
+        params={{ quizId: quiz._id }}
+        className="min-w-0 flex-1 hover:text-indigo-600 dark:hover:text-indigo-400"
+      >
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-medium">{quiz.title}</span>
+          {disabled && (
+            <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-950 dark:text-amber-200">
+              {t("disabled")}
+            </span>
           )}
-        </Link>
-        <Button
-          variant={disabled ? "primary" : "outline"}
-          loading={isToggling}
-          disabled={toggleDisabled.isPending}
-          onClick={() => toggleDisabled.mutate({ quizId: quiz._id, disabled: !disabled })}
-        >
-          {disabled ? t("enableQuiz") : t("disableQuiz")}
-        </Button>
-      </div>
+        </div>
+        {quiz.description && (
+          <p className="mt-2 line-clamp-3 text-sm text-slate-600 dark:text-slate-400">{quiz.description}</p>
+        )}
+      </Link>
+      <Button
+        className="mt-4 w-full"
+        variant={disabled ? "primary" : "outline"}
+        loading={isToggling}
+        disabled={toggleDisabled.isPending}
+        onClick={() => toggleDisabled.mutate({ quizId: quiz._id, disabled: !disabled })}
+      >
+        {disabled ? t("enableQuiz") : t("disableQuiz")}
+      </Button>
     </li>
   );
 }
@@ -76,7 +75,7 @@ export function QuizListPage() {
       {isLoading ? (
         <QuizListSkeleton />
       ) : (
-        <ul className="space-y-3">
+        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {data?.map((q) => (
             <QuizListItem key={q._id} quiz={q} />
           ))}

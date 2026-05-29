@@ -145,7 +145,7 @@ export function QuizEditPage() {
           </label>
         )}
 
-        <ul className="space-y-3">
+        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {questions.map((q) => (
             <QuestionRow
               key={q._id}
@@ -176,7 +176,7 @@ function QuestionRow({ question: q, selected, onToggleSelect, isDeleting, delete
   const { t } = useTranslation();
 
   return (
-    <li className="rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+    <li className="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <div className="flex gap-3">
         <input
           type="checkbox"
@@ -185,24 +185,28 @@ function QuestionRow({ question: q, selected, onToggleSelect, isDeleting, delete
           onChange={onToggleSelect}
           aria-label={t("selectQuestion")}
         />
-        <div className="flex min-w-0 flex-1 justify-between gap-4">
-          <div className="min-w-0">
-            <p className="font-medium">{q.question}</p>
-            <p className="mt-1 text-xs uppercase tracking-wide text-slate-500">{q.type}</p>
-            <ol className="mt-2 list-decimal pl-5 text-sm text-slate-700 dark:text-slate-300">
-              {q.options.map((o, i) => (
-                <li key={i}>{o}</li>
-              ))}
-            </ol>
-            <p className="mt-2 text-sm text-emerald-700 dark:text-emerald-400">
-              Correct: {(q.correctAnswers ?? []).map((i) => i + 1).join(", ")}
-            </p>
-          </div>
-          <Button variant="danger" loading={isDeleting} disabled={deleteDisabled} onClick={onDelete}>
-            {isDeleting ? t("deleting") : t("delete")}
-          </Button>
+        <div className="min-w-0 flex-1">
+          <p className="font-medium">{q.question}</p>
+          <p className="mt-1 text-xs uppercase tracking-wide text-slate-500">{q.type}</p>
+          <ol className="mt-2 list-decimal pl-5 text-sm text-slate-700 dark:text-slate-300">
+            {q.options.map((o, i) => (
+              <li key={i}>{o}</li>
+            ))}
+          </ol>
+          <p className="mt-2 text-sm text-emerald-700 dark:text-emerald-400">
+            Correct: {(q.correctAnswers ?? []).map((i) => i + 1).join(", ")}
+          </p>
         </div>
       </div>
+      <Button
+        className="mt-4 w-full"
+        variant="danger"
+        loading={isDeleting}
+        disabled={deleteDisabled}
+        onClick={onDelete}
+      >
+        {isDeleting ? t("deleting") : t("delete")}
+      </Button>
     </li>
   );
 }
