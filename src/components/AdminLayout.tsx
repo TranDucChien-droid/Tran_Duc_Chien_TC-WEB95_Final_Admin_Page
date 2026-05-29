@@ -9,7 +9,7 @@ export function AdminLayout() {
       <div className="flex min-w-0 flex-1 flex-col">
         <AppHeader authenticated />
         <main className="flex-1 px-4 py-8 lg:px-8">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto w-full">
             <Outlet />
           </div>
         </main>

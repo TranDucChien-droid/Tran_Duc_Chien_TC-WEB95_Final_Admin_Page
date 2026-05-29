@@ -9,6 +9,7 @@ import { QuizListSkeleton } from "@/components/skeletons/QuizListSkeleton";
 import { useCreateQuiz } from "@/hooks/useCreateQuiz";
 import { useQuizzes } from "@/hooks/useQuizzes";
 import { useToggleQuizDisabled } from "@/hooks/useToggleQuizDisabled";
+import { CARD_GRID_CLASS } from "@/constants/grid";
 import type { Quiz } from "@/types/quiz.types";
 
 function QuizListItem({ quiz }: { quiz: Quiz }) {
@@ -67,7 +68,7 @@ export function QuizListPage() {
   const create = useCreateQuiz();
 
   return (
-    <div>
+    <div className="w-full">
       <div className="mb-6 flex items-center justify-between gap-4">
         <h1 className="text-2xl font-semibold">{t("quizzes")}</h1>
         <Button onClick={() => setOpen(true)}>{t("newQuiz")}</Button>
@@ -75,7 +76,7 @@ export function QuizListPage() {
       {isLoading ? (
         <QuizListSkeleton />
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <ul className={CARD_GRID_CLASS}>
           {data?.map((q) => (
             <QuizListItem key={q._id} quiz={q} />
           ))}

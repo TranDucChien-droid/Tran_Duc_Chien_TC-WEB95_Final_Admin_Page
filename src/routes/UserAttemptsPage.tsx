@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { QuizListSkeleton } from "@/components/skeletons/QuizListSkeleton";
 import { useUserAttempts } from "@/hooks/useUserAttempts";
+import { CARD_GRID_CLASS } from "@/constants/grid";
 import type { AttemptAnswerDetail, AttemptSummary } from "@/types/user.types";
 
 function formatDate(value: string) {
@@ -102,7 +103,7 @@ export function UserAttemptsPage() {
   const { data, isLoading } = useUserAttempts(userId);
 
   return (
-    <div>
+    <div className="w-full">
       <Link to="/users" className="mb-4 inline-block text-sm text-indigo-600 hover:underline dark:text-indigo-400">
         ← {t("backToUsers")}
       </Link>
@@ -125,7 +126,7 @@ export function UserAttemptsPage() {
           {!data.attempts.length ? (
             <p className="text-slate-600 dark:text-slate-400">{t("noAttempts")}</p>
           ) : (
-            <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <ul className={CARD_GRID_CLASS}>
               {data.attempts.map((attempt) => (
                 <AttemptCard key={attempt._id} attempt={attempt} />
               ))}

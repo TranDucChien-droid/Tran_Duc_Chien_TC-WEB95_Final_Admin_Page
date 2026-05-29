@@ -9,6 +9,7 @@ import { Button } from "@/components/Button";
 import { Modal } from "@/components/Modal";
 import { QuizEditModal } from "@/components/QuizEditModal";
 import { QuizDetailSkeleton } from "@/components/skeletons/QuizDetailSkeleton";
+import { CARD_GRID_CLASS } from "@/constants/grid";
 import type { Question } from "@/types/quiz.types";
 
 export function QuizEditPage() {
@@ -72,7 +73,7 @@ export function QuizEditPage() {
   if (error || !data) return <p className="text-red-600">Failed to load quiz</p>;
 
   return (
-    <div className="space-y-8">
+    <div className="w-full space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <Link to="/" className="text-sm text-indigo-600 hover:underline dark:text-indigo-400">
           ← {t("back")}
@@ -145,7 +146,7 @@ export function QuizEditPage() {
           </label>
         )}
 
-        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <ul className={CARD_GRID_CLASS}>
           {questions.map((q) => (
             <QuestionRow
               key={q._id}

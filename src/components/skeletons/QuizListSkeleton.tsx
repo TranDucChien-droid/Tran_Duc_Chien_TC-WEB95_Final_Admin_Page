@@ -1,15 +1,14 @@
+import { CARD_GRID_CLASS } from "@/constants/grid";
 import { Skeleton } from "./Skeleton";
-
-const CARD_GRID = "grid gap-4 sm:grid-cols-2 xl:grid-cols-3";
 
 type QuizListSkeletonProps = {
   count?: number;
   withTrailing?: boolean;
 };
 
-export function QuizListSkeleton({ count = 6, withTrailing = false }: QuizListSkeletonProps) {
+export function QuizListSkeleton({ count = 8, withTrailing = false }: QuizListSkeletonProps) {
   return (
-    <ul className={CARD_GRID} aria-busy="true" aria-label="Loading">
+    <ul className={CARD_GRID_CLASS} aria-busy="true" aria-label="Loading">
       {Array.from({ length: count }, (_, i) => (
         <li
           key={i}
